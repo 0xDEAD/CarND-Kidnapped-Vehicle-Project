@@ -46,14 +46,16 @@ class ParticleFilter {
     void dataAssociation(const std::vector<LandmarkObs> predicted, std::vector<LandmarkObs>& observations);
 
 public:
+    std::random_device random_device;
     std::default_random_engine engine;
+    std::mt19937 mtengine;
 
 	// Set of current particles
 	std::vector<Particle> particles;
 
 	// Constructor
 	// @param num_particles Number of particles
-    ParticleFilter() : engine(), num_particles(100), is_initialized(false) {}
+    ParticleFilter() : random_device(), engine(), mtengine(random_device()), num_particles(100), is_initialized(false) {}
 
 	// Destructor
 	~ParticleFilter() {}
