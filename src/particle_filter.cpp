@@ -85,6 +85,10 @@ void ParticleFilter::updateWeights(const double sensor_range, const double std_l
         auto &p = particles[i];
 
         // collect landmarks in sensor range
+        std::vector<LandmarkObs> predictedLandmarks;
+        for (auto &l : map_landmarks.landmark_list)
+            if (dist(p.x, p.y, l.x_f, l.y_f) < sensor_range)
+                predictedLandmarks.push_back(LandmarkObs{l.id_i, l.x_f, l.y_f});
 
         // convert coordinates of observations to map coordinates
 
