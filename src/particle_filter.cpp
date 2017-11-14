@@ -112,6 +112,14 @@ void ParticleFilter::updateWeights(const double sensor_range, const double std_l
         dataAssociation(predictedLandmarks, observationsInMapCoordinates);
 
         // compute particles weight
+        p.weight = 1.0;
+        for(auto &oMap: observationsInMapCoordinates)
+        {
+            const LandmarkObs &landmark = predictedLandmarks[oMap.id];
+            const double x_term = pow(oMap.x - landmark.x, 2) / (2 * pow(std_landmark[0], 2));
+            const double y_term = pow(oMap.y - landmark.y, 2) / (2 * pow(std_landmark[1], 2));
+            p.weight *= exp(-(x_term + y_term)) / (2 * M_PI * std_landmark[0] * std_landmark[1]);
+        }
 
         // update weight in list
         weights[i] = p.weight;
