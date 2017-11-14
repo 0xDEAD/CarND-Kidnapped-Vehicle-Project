@@ -55,7 +55,7 @@ public:
 
 	// Constructor
 	// @param num_particles Number of particles
-    ParticleFilter() : random_device(), engine(), mtengine(random_device()), num_particles(100), is_initialized(false) {}
+    ParticleFilter() : random_device(), engine(), mtengine(random_device()), num_particles(40), is_initialized(false) {}
 
 	// Destructor
 	~ParticleFilter() {}
