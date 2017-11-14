@@ -91,6 +91,14 @@ void ParticleFilter::updateWeights(const double sensor_range, const double std_l
                 predictedLandmarks.push_back(LandmarkObs{l.id_i, l.x_f, l.y_f});
 
         // convert coordinates of observations to map coordinates
+        vector<LandmarkObs> observationsInMapCoordinates;
+        for(auto &o : observations)
+        {
+            LandmarkObs oMap;
+            oMap.x = p.x + o.x * cos(p.theta) - o.y * sin(p.theta);
+            oMap.y = p.y + o.x * sin(p.theta) + o.y * cos(p.theta);
+            observationsInMapCoordinates.push_back(oMap);
+        }
 
         // find matching landmarks
 
