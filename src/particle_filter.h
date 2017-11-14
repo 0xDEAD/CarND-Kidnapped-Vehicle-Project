@@ -10,6 +10,7 @@
 #define PARTICLE_FILTER_H_
 
 #include "helper_functions.h"
+#include <random>
 
 struct Particle {
 
@@ -30,8 +31,6 @@ class ParticleFilter {
 	// Number of particles to draw
 	int num_particles; 
 	
-	
-	
 	// Flag, if filter is initialized
 	bool is_initialized;
 	
@@ -39,13 +38,14 @@ class ParticleFilter {
 	std::vector<double> weights;
 	
 public:
-	
+    std::default_random_engine engine;
+
 	// Set of current particles
 	std::vector<Particle> particles;
 
 	// Constructor
 	// @param num_particles Number of particles
-	ParticleFilter() : num_particles(0), is_initialized(false) {}
+    ParticleFilter() : engine(), num_particles(100), is_initialized(false) {}
 
 	// Destructor
 	~ParticleFilter() {}
@@ -59,7 +59,7 @@ public:
 	 * @param std[] Array of dimension 3 [standard deviation of x [m], standard deviation of y [m]
 	 *   standard deviation of yaw [rad]]
 	 */
-	void init(double x, double y, double theta, double std[]);
+    void init(const double x, const double y, const double theta, const double std[]);
 
 	/**
 	 * prediction Predicts the state for the next time step
